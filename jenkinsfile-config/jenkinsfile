@@ -13,7 +13,7 @@ pipeline {
         stage('checkout') {
             steps {
                  script{
-                        dir("infrastructure-server")
+                        dir("serverdata")
                         {
                             git "https://github.com/urwashi-lav/infrastructure-server.git"
                         }
@@ -23,9 +23,9 @@ pipeline {
 
         stage('Plan') {
             steps {
-                sh 'pwd;cd terraform/ ; terraform init'
-                sh "pwd;cd terraform/ ; terraform plan -out tfplan"
-                sh 'pwd;cd terraform/ ; terraform show -no-color tfplan > tfplan.txt'
+                sh 'pwd;cd serverdata/ ; terraform init'
+                sh "pwd;cd serverdata/ ; terraform plan -out tfplan"
+                sh 'pwd;cd serverdata/ ; terraform show -no-color tfplan > tfplan.txt'
             }
         }
         stage('Approval') {
@@ -46,7 +46,7 @@ pipeline {
 
         stage('Apply') {
             steps {
-                sh "pwd;cd terraform/ ; terraform apply -input=false tfplan"
+                sh "pwd;cd serverdata/ ; terraform apply -input=false tfplan"
             }
         }
     }
