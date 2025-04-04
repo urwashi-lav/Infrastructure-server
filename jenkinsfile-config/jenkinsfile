@@ -10,7 +10,9 @@ pipeline {
 
    agent  any
     stages {
-        stage('checkout') {
+        stage('checkout scm') [
+        $class: 'GitSCM', 
+         branches: [[name: '*/main']],]{
             steps {
                  script{
                         dir("terraform")
